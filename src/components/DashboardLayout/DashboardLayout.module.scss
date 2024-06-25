@@ -1,0 +1,24 @@
+@import '@/styles/variables';
+
+.layout{
+  width: 100%;
+
+.mainContent{
+min-height:calc(200vh - 6.25rem);
+padding: 1rem;
+width: 100%;
+margin-top: 6.25rem;
+
+
+
+@media (min-width: ($breakpoint-lg)) {
+    padding: 3rem;
+    top: 0;
+    position: absolute;
+    margin-top: 6.25rem;
+    margin-left: 17.7rem;
+    width: calc(100vw - 17.7rem);
+  }
+  }
+
+}

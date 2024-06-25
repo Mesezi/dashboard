@@ -1,0 +1,52 @@
+@import '@/styles/variables';
+
+.users{
+    
+h2{
+    color: $dark-blue;
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+.userInfoCard{
+    background-color: white;
+    padding: 1rem 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    border: 1px solid #213F7D0F;
+    height: 10rem;
+    border-radius: .25rem;
+    box-shadow: 5px 5px 20px 0px rgba(0, 0, 0, 0.04);
+
+    p{
+        color: $gray;
+        text-transform: uppercase;
+        font-size: .88rem;
+        font-weight: 500;
+    }
+
+    span{
+        font-weight: 600;
+        font-size: 1.5rem;
+        color: $dark-blue;
+    }
+}
+
+.cardsSlider{
+   display: grid;
+   grid-template-columns: 1fr 1fr;
+   gap: 1rem;
+   margin: 2rem 0;
+   width: 100%;
+
+   @media (min-width: ($breakpoint-md)) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+   @media (min-width: ($breakpoint-lg)) {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+}
+
+}

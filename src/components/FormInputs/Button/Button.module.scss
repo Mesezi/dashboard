@@ -1,0 +1,48 @@
+@import '@/styles/variables';
+
+.button {
+    border: none;
+    height: 3rem;
+    background-color: $light-blue;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: .5rem;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    transition: background-color 0.5s ease-in-out;
+    font-size: 0.88rem;
+  
+    &:hover {
+     transform: scale(.97);
+    }
+  
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.2);
+    }
+  
+    &:disabled {
+      cursor: not-allowed;
+    }
+  
+    .loaderIcon {
+      margin-left: 8px;
+      animation: spin 1s linear infinite;
+    }
+  
+    @keyframes spin {
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+span{
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+}
+  }
+  

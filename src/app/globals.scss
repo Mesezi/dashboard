@@ -1,0 +1,70 @@
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+@font-face {
+  font-family: 'AvenirRegular';
+  src: url('/assets/Avenir-Font/AvenirNextLTPro-Regular.otf') format('opentype');
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'AvenirBold';
+  src: url('/assets/Avenir-Font/AvenirNextLTPro-Bold.otf') format('opentype');
+  font-style: normal;
+}
+
+/* Webkit browsers */
+::-webkit-scrollbar {
+  width: .7rem;
+  height: .7rem;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: .4rem;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: .4rem;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Work Sans", sans-serif;
+  scrollbar-width: thin;
+  scrollbar-color: #888 #f1f1f1;
+}
+
+button, input{
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background-color: rgb(0, 0, 0, 0);
+}
+
+body {
+  overflow-x: hidden;
+  background-color: #fbfbfb;
+}
+
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 640px)  {
+  html {
+    font-size: 15px;
+  }
+}
+
+@media (min-width: 1024px) {
+  html {
+    font-size: 16px;
+  }
+}

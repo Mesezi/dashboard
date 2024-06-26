@@ -1,5 +1,4 @@
 import React from 'react';
-import { getStatusColors } from '@/lib/utils';
 import styles from './Table.module.scss'
 
 interface StatusProps {

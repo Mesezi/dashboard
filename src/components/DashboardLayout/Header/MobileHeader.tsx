@@ -4,7 +4,7 @@ import { AiOutlineBell, AiOutlineSearch } from 'react-icons/ai';
 import styles from './Header.module.scss';
 import { HiMenuAlt2 } from "react-icons/hi";
 import useClickOutside from '@/hooks/useClickOutside';
-import { IoDocumentsOutline } from 'react-icons/io5';
+import { IoCloseOutline, IoDocumentsOutline } from 'react-icons/io5';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { FaChevronDown } from 'react-icons/fa';
@@ -96,9 +96,24 @@ const MobileHeader = () => {
         <img src="/assets/images/lendsqr-logo.svg" alt="Lendsqr Logo" />
       </div>
 
-      <div className={styles.info}>
 
-      <button className={styles.notificationBell}>
+      {isSearchVisible && (
+          <form className={styles.searchForm}>
+            <input type="text" autoFocus className={styles.input} placeholder='Search for anything' />
+            <button type="submit">
+              <AiOutlineSearch size={24} />
+            </button>
+            <button type='button' onClick={()=> setIsSearchVisible(false)}>
+               <IoCloseOutline size={22}/>
+            </button>
+           
+          </form>
+        )}
+
+
+{!isSearchVisible &&  <div className={styles.info}>
+
+        <button className={styles.notificationBell}>
           <AiOutlineBell size={24} />
         </button>
 
@@ -107,14 +122,7 @@ const MobileHeader = () => {
           <AiOutlineSearch size={24} />
         </button>
 
-        {/* {isSearchVisible && (
-          <form className={styles.searchForm}>
-            <input type="text" className={styles.input} placeholder='Search for anything' />
-            <button type="submit">
-              <AiOutlineSearch size={24} />
-            </button>
-          </form>
-        )} */}
+       
 
         <button className={styles.profile}>
           <img src="/assets/images/avatar.png" className={styles.userProfileImage} alt="User Avatar" />
@@ -122,8 +130,10 @@ const MobileHeader = () => {
 
         <button onClick={()=> setOpenMenu(!openMenu)}>
             <HiMenuAlt2 size={24}/>
-        </button>
-      </div>
+        </button> 
+
+     
+      </div>}
     </header>
   );
 };

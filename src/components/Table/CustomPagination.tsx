@@ -39,38 +39,30 @@ const CustomPagination: FC<CustomPaginationProps> = ({
     const pageNumbers: any[] = [];
 
     if (totalPages <= totalVisiblePages) {
-      // Case 1: Less than or equal to 6 pages, show all pages
       for (let i = 1; i <= pages; i++) {
         pageNumbers.push(i);
       }
     } else {
-      // Case 2: More than 6 pages, show ellipses around the current page
       const addEllipsis = (prevPage: number, nextPage: number) => {
         if (prevPage + 1 < nextPage) pageNumbers.push("...");
       };
 
-      // Always show the first page
       pageNumbers.push(1);
 
-      // Determine range of pages to show around the current page
       const startPage = Math.max(
         2,
         currentPage - Math.floor(totalVisiblePages / 2)
       );
       const endPage = Math.min(pages - 1, startPage + totalVisiblePages - 2);
 
-      // Add ellipsis if there are pages between the first page and the startPage
       addEllipsis(1, startPage);
 
-      // Add pages around the current page
       for (let i = startPage; i <= endPage; i++) {
         pageNumbers.push(i);
       }
 
-      // Add ellipsis if there are pages between the endPage and the last page
       addEllipsis(endPage, pages);
 
-      // Always show the last page
       pageNumbers.push(pages);
     }
 

@@ -10,6 +10,8 @@ import styles from "./Table.module.scss";
 import CustomPagination from "./CustomPagination";
 import { FaChevronDown } from "react-icons/fa";
 import useClickOutside from "@/hooks/useClickOutside";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { MdOutlineSearchOff, MdOutlineWifiTetheringError } from "react-icons/md";
 
 interface TableProps {
   data: any;
@@ -26,6 +28,7 @@ interface TableProps {
     options: string[] | null;
   }[];
   isLoading?: boolean;
+  isError: boolean;
   emptymessage?: string;
   customFilterFn: any;
   currentPage: number;
@@ -100,6 +103,7 @@ export function DataTable({
   isLoading,
   filterOptions,
   emptymessage,
+  isError,
   openFilterForm,
   setOpenFilterForm,
   customFilterFn,
@@ -108,10 +112,6 @@ export function DataTable({
 }: TableProps) {
   const [pageSize, setPageSize] = useState(10);
   const [filterForm, setFilterForm] = useState(null);
-  const filterFormRef = useRef(null);
-  // useClickOutside(filterFormRef, () => setOpenFilterForm(false));
-
-  // console.log(filterForm);
 
   const tableInstance = useReactTable({
     data,
@@ -138,7 +138,7 @@ export function DataTable({
     <>
       <div className={styles.parent}>
         {openFilterForm && (
-          <div className={styles.filterForm} ref={filterFormRef}>
+          <div className={styles.filterForm}>
             {filterOptions.map((option) => (
               <FilterOptionInput
                 input={option}
@@ -172,7 +172,19 @@ export function DataTable({
           </div>
         )}
         <div className={styles.tableContainer}>
-          {!isLoading && data.length !== 0 && (
+{
+  isLoading && <div className={styles.loadingContainer}>
+<AiOutlineLoading3Quarters />
+    </div>
+}
+
+{
+  !isLoading && isError && <div className={styles.errorContainer}>
+  <MdOutlineWifiTetheringError />
+  <p>Network Error</p>
+      </div>
+}
+          {!isLoading && !isError && (
             <table className={styles.table}>
               <thead>
                 {tableInstance.getHeaderGroups().map((headerEl) => {
@@ -194,7 +206,13 @@ export function DataTable({
                   );
                 })}
               </thead>
-              <tbody>
+
+              {tableInstance?.getFilteredRowModel()?.rows?.length < 1 && filtering && <div className={styles.noFilterResultContainer}>
+<MdOutlineSearchOff  />
+<p>No result, try again</p>
+    </div>}
+
+              {data?.length > 0 && <tbody>
                 {tableInstance.getRowModel().rows.map((rowEl) => {
                   return (
                     <tr key={rowEl.id}>
@@ -213,14 +231,14 @@ export function DataTable({
                     </tr>
                   );
                 })}
-              </tbody>
+              </tbody> }
             </table>
           )}
         </div>
       </div>
 
-      {/* <div >Page Rows ({tableInstance.getRowModel().rows.length})</div> */}
-      <CustomPagination
+     
+      { !isLoading && data?.length !== 0 && <CustomPagination
         totalRecords={tableInstance.getFilteredRowModel().rows.length}
         setPageSize={setPageSize}
         totalPages={tableInstance.getPageCount()}
@@ -229,7 +247,7 @@ export function DataTable({
         handlePageChange={setCurrentPage}
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
-      />
+      /> }
     </>
   );
 }

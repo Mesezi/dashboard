@@ -8,6 +8,8 @@ import {
 import { DataTable } from "@/components/Table/DataTable";
 import { Status } from "@/components/Table/Status";
 import { datesAreEqual, formatDateType } from "@/lib/utils";
+import { getUsersTableData } from "@/services/users";
+import { useQuery } from "@tanstack/react-query";
 import { createColumnHelper } from "@tanstack/react-table";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -29,9 +31,16 @@ const UsersTable = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [openFilterForm, setOpenFilterForm] = useState(false);
   const [filtering, setFiltering] = useState<any>(null);
-  const [data, setData] = useState([])
-
   const router = useRouter()
+
+  
+  const { data, isLoading, isError } = useQuery<any>({
+    queryKey: ["customers-users",],
+    queryFn: () => getUsersTableData(),
+    staleTime: 5 * 1000,
+    refetchInterval: 5 * 1000,
+    refetchIntervalInBackground: true
+  });
 
   const filterOptions = [
     {
@@ -70,22 +79,7 @@ const UsersTable = () => {
     },
   ];
 
-  useEffect(()=>{
-  const fetchData = async () =>{
 
-    try{
-    const res = await fetch('https://run.mocky.io/v3/d0d97570-fa27-4d8e-b7a0-39ac0bbd31e2')
-    const data = await res.json()
-    sessionStorage.setItem('lendsqrMockData', JSON.stringify(data))
-    setData(data) 
-    }
-    catch(err){
-        console.log(err)
-    }
-    
-  }
-  fetchData()
-  }, [])
 
   const customFilterFn = (rows: any, columnIds: any, filterValue: any) => {
     if (!filtering) {
@@ -222,7 +216,7 @@ const UsersTable = () => {
 
   return (
     <div>
-      <DataTable
+    <DataTable
         columns={columns}
         data={data}
         filtering={filtering}
@@ -233,7 +227,9 @@ const UsersTable = () => {
         openFilterForm={openFilterForm}
         filterOptions={filterOptions}
         currentPage={currentPage}
-      />
+        isLoading={isLoading}
+        isError={isError}
+      /> 
     </div>
   );
 };

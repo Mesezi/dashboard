@@ -28,6 +28,7 @@ export default function RootLayout({
               toastClassName="mt-14"
               theme="colored"
               hideProgressBar={true}
+              autoClose={300}
             />
         </TanstackQueryProvider>
         </body>

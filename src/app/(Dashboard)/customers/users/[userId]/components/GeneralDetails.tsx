@@ -7,7 +7,7 @@ interface SectionProps {
 }
 
 interface GeneralDetailsProps {
-  extraData: any;
+    data: any;
 }
 
 const PersonalInformation: FC<SectionProps> = ({ title, information }) => {
@@ -165,25 +165,28 @@ const SocialsInformation: FC<SectionProps> = ({ title, information }) => {
   );
 };
 
-const GeneralDetails: FC<GeneralDetailsProps> = ({ extraData }) => {
+const GeneralDetails: FC<GeneralDetailsProps> = ({ data }) => {
+    if(!data)
+        return <></>
+        
   return (
     <section className={styles.generalInfoSections}>
       <PersonalInformation
         title={"personal information"}
-        information={extraData.personalInformation}
+        information={data.personalInformation}
       />
       <EducationAndEmploymentInformation
         title={"education and employment"}
-        information={extraData.educationAndEmploymentInformation}
+        information={data.educationAndEmploymentInformation}
       />
       <SocialsInformation
         title={"socials"}
-        information={extraData.socialsInformation}
+        information={data.socialsInformation}
       />
 
       <GuarantorInformation
         title={"Guarantor"}
-        information={extraData.guarantor}
+        information={data.guarantor}
       />
     </section>
   );

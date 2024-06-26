@@ -1,4 +1,8 @@
+@import '@/styles/variables';
 @import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+
 @font-face {
   font-family: 'AvenirRegular';
   src: url('/assets/Avenir-Font/AvenirNextLTPro-Regular.otf') format('opentype');
@@ -32,6 +36,21 @@
 }
 
 
+.Toastify__toast--default {
+    background: #fff;
+    color: #aaa;
+ }
+  .Toastify__toast--info {
+    background: #3498db;
+ }
+  .Toastify__toast--success {
+    background: $light-blue;
+ }
+  .Toastify__toast--error {
+    background: $red;
+ }
+
+
 * {
   padding: 0;
   margin: 0;
@@ -51,6 +70,7 @@ button, input{
 body {
   overflow-x: hidden;
   background-color: #fbfbfb;
+  font-family: "Work Sans", sans-serif;
 }
 
 html {

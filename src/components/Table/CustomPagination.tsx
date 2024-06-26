@@ -86,10 +86,10 @@ const CustomPagination: FC<CustomPaginationProps> = ({
         <div className={styles.selectContainer} ref={dropdownRef}>
           <button
             onClick={() => setOpenDropdown(!openDropdown)}
-            disabled={pageCount === currentPage &&  (totalRecords % pageSize) < 10
+            disabled={pageCount === currentPage &&  (totalRecords % pageSize) > 0
                 ? true : false}
           >
-            {pageCount === currentPage &&  (totalRecords % pageSize) < 10
+            {pageCount === currentPage &&  (totalRecords % pageSize) > 0
              ? (totalRecords % pageSize) : pageSize}{" "}
             <FaChevronDown className={styles.customCaret} />
           </button>

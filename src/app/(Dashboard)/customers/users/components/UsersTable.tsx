@@ -9,11 +9,13 @@ import { DataTable } from "@/components/Table/DataTable";
 import { Status } from "@/components/Table/Status";
 import { datesAreEqual, formatDateType } from "@/lib/utils";
 import { getUsersTableData } from "@/services/users";
+import { IFiltering } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 import { createColumnHelper } from "@tanstack/react-table";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import { toast } from "react-toastify";
 
 // Define your data type
 interface User {
@@ -26,60 +28,80 @@ interface User {
   id: string;
 }
 
+
+
 const UsersTable = () => {
   const columnHelper = createColumnHelper<User>();
   const [currentPage, setCurrentPage] = useState(1);
   const [openFilterForm, setOpenFilterForm] = useState(false);
-  const [filtering, setFiltering] = useState<any>(null);
-  const router = useRouter()
+  const [filtering, setFiltering] = useState<IFiltering>(null);
+  const router = useRouter();
 
-  
-  const { data, isLoading, isError } = useQuery<any>({
-    queryKey: ["customers-users",],
-    queryFn: () => getUsersTableData(),
-    staleTime: 5 * 1000,
-    refetchInterval: 5 * 1000,
-    refetchIntervalInBackground: true
+  const fetchUsersData = async () => {
+    try {
+      const response = await getUsersTableData();
+      // Store response in sessionStorage
+      sessionStorage.setItem("lendsqrMockData", JSON.stringify(response));
+      return response;
+    } catch (err) {
+      toast.error("Error getting data");
+    }
+  };
+
+  const { data, isLoading, isError } = useQuery<User[]>({
+    queryKey: ["customers-users"],
+    queryFn: () => fetchUsersData(),
+    staleTime: 300 * 1000,
+    refetchInterval: 300 * 1000,
+    refetchIntervalInBackground: true,
   });
 
   const filterOptions = [
     {
-        key: "organization",
-        type: "select",
-        label: 'organization',
-        options: ["Org1", "Org2", "Org3", "Org4", "Org5", "Org6", "Org7", "Org8", "Org9", "Org10"],
-      },
+      key: "organization",
+      type: "select",
+      label: "organization",
+      options: [
+        "Org1",
+        "Org2",
+        "Org3",
+        "Org4",
+        "Org5",
+        "Org6",
+        "Org7",
+        "Org8",
+        "Org9",
+        "Org10",
+      ],
+    },
 
     {
       key: "username",
       type: "text",
-      label: 'username',
+      label: "username",
       options: null,
     },
 
     {
-        key: "email",
-        type: "email",
-        label: 'email',
-        options: null,
-      },
+      key: "email",
+      type: "email",
+      label: "email",
+      options: null,
+    },
     {
       key: "dateJoined",
-      label: 'date',
+      label: "date",
       type: "date",
       options: null,
     },
 
-
     {
       key: "status",
       type: "select",
-      label: 'status',
+      label: "status",
       options: ["active", "inactive", "pending", "blacklisted"],
     },
   ];
-
-
 
   const customFilterFn = (rows: any, columnIds: any, filterValue: any) => {
     if (!filtering) {
@@ -90,28 +112,37 @@ const UsersTable = () => {
       ? rows.original.status.toLowerCase() === filterValue.status.toLowerCase()
       : true;
 
-    // const organizationMatch = filterValue.organization
-    // ? rows.original.organization.toLowerCase() === filterValue.organization.toLowerCase()
-    // : true;
-
     const emailMatch = filterValue.email
-    ? rows.original.email.toLowerCase().includes(filterValue.email.toLowerCase())
-    : true;
+      ? rows.original.email
+          .toLowerCase()
+          .includes(filterValue.email.toLowerCase())
+      : true;
 
     const dateJoinedMatch = filterValue?.dateJoined
-    ? datesAreEqual(new Date(rows.original.dateJoined), new Date(filterValue.dateJoined))
-    : true;
-
+      ? datesAreEqual(
+          new Date(rows.original.dateJoined),
+          new Date(filterValue.dateJoined)
+        )
+      : true;
 
     const organizationMatch = filterValue?.organization
-      ? rows.original.organization.toLowerCase().includes(filterValue.organization.toLowerCase())
+      ? rows.original.organization.toLowerCase() ===
+        filterValue.organization.toLowerCase()
       : true;
 
     const usernameMatch = filterValue?.username
-      ? rows.original.username.toLowerCase().includes(filterValue.username.toLowerCase())
+      ? rows.original.username
+          .toLowerCase()
+          .includes(filterValue.username.toLowerCase())
       : true;
 
-    return statusMatch && usernameMatch && organizationMatch  && dateJoinedMatch && emailMatch;
+    return (
+      statusMatch &&
+      usernameMatch &&
+      organizationMatch &&
+      dateJoinedMatch &&
+      emailMatch
+    );
   };
 
   const columns = [
@@ -173,7 +204,7 @@ const UsersTable = () => {
           />
         </div>
       ),
-      cell: (info) => <p>{formatDateType(info.getValue())}</p> ,
+      cell: (info) => <p>{formatDateType(info.getValue())}</p>,
     }),
     columnHelper.accessor("status", {
       header: () => (
@@ -190,33 +221,33 @@ const UsersTable = () => {
     columnHelper.display({
       id: "actions",
       cell: (info) => {
-        const userId = info.row.original.id
-        return <button className="actions-cell">
-          <BsThreeDotsVertical />
+        const userId = info.row.original.id;
+        return (
+          <button className="actions-cell">
+            <BsThreeDotsVertical />
 
-          <article>
-            <ul>
-              <li onClick={()=>router.push(`/customers/users/${userId}`)}>
-                <EyeIcon /> View Details
-              </li>
-              <li>
-                <BlacklistIcon /> Blacklist User
-              </li>
-              <li>
-                <ActivateUserIcon /> Activate User
-              </li>
-            </ul>
-          </article>
-        </button>
-      }
+            <article>
+              <ul>
+                <li onClick={() => router.push(`/customers/users/${userId}`)}>
+                  <EyeIcon /> View Details
+                </li>
+                <li>
+                  <BlacklistIcon /> Blacklist User
+                </li>
+                <li>
+                  <ActivateUserIcon /> Activate User
+                </li>
+              </ul>
+            </article>
+          </button>
+        );
+      },
     }),
   ];
 
- 
-
   return (
     <div>
-    <DataTable
+      <DataTable
         columns={columns}
         data={data}
         filtering={filtering}
@@ -229,7 +260,7 @@ const UsersTable = () => {
         currentPage={currentPage}
         isLoading={isLoading}
         isError={isError}
-      /> 
+      />
     </div>
   );
 };

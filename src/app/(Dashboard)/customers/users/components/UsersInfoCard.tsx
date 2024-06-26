@@ -1,5 +1,6 @@
 import React, { FC, SVGProps } from 'react'
 import styles from '../Users.module.scss'
+import { formatNumberWithCommas } from '@/lib/utils';
 
 interface CardProps{
   icon: FC<SVGProps<SVGSVGElement>>;
@@ -12,7 +13,7 @@ const UsersInfoCard:FC<CardProps> = ({ amount, icon: Icon, cardTitle }) => {
     <div className={styles.userInfoCard}>
       <Icon />
       <p>{cardTitle}</p>
-      <span>{amount}</span>
+      <span>{formatNumberWithCommas(amount)}</span>
     </div>
   )
 }

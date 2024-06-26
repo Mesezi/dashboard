@@ -12,14 +12,17 @@ import { FaChevronDown } from "react-icons/fa";
 import useClickOutside from "@/hooks/useClickOutside";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { MdOutlineSearchOff, MdOutlineWifiTetheringError } from "react-icons/md";
+import { IFilterOptions, IFiltering } from "@/types";
+import { BiCalendar } from "react-icons/bi";
+import { CalendarIcon } from "../Icons";
 
 interface TableProps {
   data: any;
   columns: any;
   openFilterForm: boolean;
   setOpenFilterForm: Dispatch<SetStateAction<boolean>>;
-  filtering?: string;
-  setFiltering?: any;
+  filtering: IFiltering;
+  setFiltering: Dispatch<SetStateAction<IFiltering>>;
   pageSize?: number;
   filterOptions: {
     key: string;
@@ -35,7 +38,14 @@ interface TableProps {
   setCurrentPage: Dispatch<SetStateAction<number>>;
 }
 
-const FilterOptionInput = ({ input, filterForm, setFilterForm }: any) => {
+
+interface FilterOptionInputTypes{
+input: IFilterOptions,
+filterForm: IFiltering;
+setFilterForm: Dispatch<SetStateAction<IFiltering>>;
+}
+
+const FilterOptionInput = ({ input, filterForm, setFilterForm }: FilterOptionInputTypes) => {
   const [openDropdown, setOpenDropdown] = useState(false);
   const dropdownRef = useRef(null);
   useClickOutside(dropdownRef, () => setOpenDropdown(false));
@@ -54,11 +64,11 @@ const FilterOptionInput = ({ input, filterForm, setFilterForm }: any) => {
 
         {openDropdown && (
           <ul className="options">
-            {input.options.map((option: any) => (
+            {input?.options?.map((option) => (
               <li
                 key={option}
                 onClick={() => {
-                  setFilterForm((prev: any) => ({
+                  setFilterForm((prev) => ({
                     ...prev,
                     [input.key]: option,
                   }));
@@ -74,7 +84,28 @@ const FilterOptionInput = ({ input, filterForm, setFilterForm }: any) => {
       </div>
     );
   }
+ if (input.type === "date") {
+return  <div className={styles.filterFormDateInput}>
+<label htmlFor="">{input.label}</label>
 
+<div data-has-value={filterForm?.[input.key] ? "true" : "false"}>
+  <p>{filterForm?.[input.key] ?? 'Date'}<CalendarIcon /></p>
+  <input
+  type={input.type}
+  data-has-value={filterForm?.[input.key] ? "true" : "false"}
+  onChange={(e) => {
+    setFilterForm((prev) => ({
+      ...prev,
+      [input.key]: e.target.value,
+    }));
+  }}
+  placeholder={input.key}
+  value={filterForm?.[input.key] ?? ""}
+></input>
+</div>
+
+</div>
+ }
   return (
     <div className={styles.filterFormTextInput}>
       <label htmlFor="">{input.label}</label>
@@ -83,7 +114,7 @@ const FilterOptionInput = ({ input, filterForm, setFilterForm }: any) => {
         type={input.type}
         data-has-value={filterForm?.[input.key] ? "true" : "false"}
         onChange={(e) => {
-          setFilterForm((prev: any) => ({
+          setFilterForm((prev) => ({
             ...prev,
             [input.key]: e.target.value,
           }));
@@ -111,7 +142,7 @@ export function DataTable({
   currentPage,
 }: TableProps) {
   const [pageSize, setPageSize] = useState(10);
-  const [filterForm, setFilterForm] = useState(null);
+  const [filterForm, setFilterForm] = useState<IFiltering>(null);
 
   const tableInstance = useReactTable({
     data,
@@ -133,6 +164,8 @@ export function DataTable({
     debugHeaders: false,
     debugColumns: false,
   });
+
+  console.log(isLoading, isError)
 
   return (
     <>
@@ -239,10 +272,10 @@ export function DataTable({
 
      
       { !isLoading && data?.length !== 0 && <CustomPagination
-        totalRecords={tableInstance.getFilteredRowModel().rows.length}
+        totalRecords={tableInstance?.getFilteredRowModel()?.rows?.length}
         setPageSize={setPageSize}
-        totalPages={tableInstance.getPageCount()}
-        pageCount={tableInstance.getPageCount()}
+        totalPages={tableInstance?.getPageCount()}
+        pageCount={tableInstance?.getPageCount()}
         pageSize={pageSize}
         handlePageChange={setCurrentPage}
         currentPage={currentPage}

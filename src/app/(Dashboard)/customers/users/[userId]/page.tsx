@@ -10,6 +10,9 @@ import React, { useState } from "react";
 import styles from "./UserDetails.module.scss";
 import GeneralDetails from "./components/GeneralDetails";
 import { useRouter } from "next/navigation";
+import { User } from "@/types";
+import { toast } from "react-toastify";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 const tabOptions = [
   "General Details",
@@ -23,55 +26,34 @@ const tabOptions = [
 const page = ({ params }: { params: { userId: string } }) => {
   const [view, setView] = useState("general details");
   const router = useRouter();
-  const { data, isLoading, isError } = useQuery<any>({
+
+  const fetchUserDetails = async ()=>{
+    try {
+      const response = await getUserDetails(params.userId);
+      return response;
+    } catch (err) {
+      toast.error("Error getting data");
+    }
+  }
+
+  const { data, isLoading, isError } = useQuery<User>({
     queryKey: ["user-details", params.userId],
-    queryFn: () => getUserDetails(params.userId),
-    staleTime: 5 * 1000,
-    refetchInterval: 5 * 1000,
-    refetchIntervalInBackground: true,
+    queryFn: () => fetchUserDetails(),
   });
 
-  const extraData = {
-    personalInformation: {
-      fullName: "Grace",
-      phoneNumber: "08727272",
-      email: "test@gmail.com",
-      bvn: "12372891772",
-      marital: "Single",
-      gender: "Male",
-      children: "None",
-      typeOfResidence: "School Hostel",
-    },
-    educationAndEmploymentInformation: {
-      levelOfEducation: "B.Sc",
-      employmentStatus: "Employed",
-      sectorOfEmployment: "FinTech",
-      durationOfEmployment: "2 years",
-      officeEmail: "itry@lendsqr.com",
-      monthlyIncome: "₦200,000.00- ₦400,000.00",
-      loanRepayment: "₦40,000",
-    },
-    socialsInformation: {
-      twitter: "@mesezi",
-      facebook: "Gabriella",
-      instagram: "@mesezi",
-    },
-
-    guarantor: [
-      {
-        fullName: "John Stewart",
-        phoneNumber: "0812882771",
-        email: "test@yahoo.com",
-        relationship: "brother",
-      },
-      {
-        fullName: "Sandra",
-        phoneNumber: "0812882771",
-        email: "sandra@yahoo.com",
-        relationship: "brother",
-      },
-    ],
+  const UserTierIcons = ({ tier }: {tier:number}) => {
+    const icons = [];
+    for (let i = 0; i < tier; i++) {
+      icons.push(<StarFilledIcon />);
+    }
+    for (let i = tier; i < 3; i++) {
+      icons.push(<StarOutlineIcon />);
+    }
+  
+    return <div>{icons}</div>;
   };
+
+  console.log(data)
 
   return (
     <div>
@@ -79,6 +61,11 @@ const page = ({ params }: { params: { userId: string } }) => {
         <BackArrowIcon /> Back to Users
       </button>
 
+      { isLoading && <div className={styles.loadingContainer}>
+<AiOutlineLoading3Quarters />
+    </div> }
+
+       {!isLoading && !isError && <>
       <div className={styles.heading}>
         <h2>User Details</h2>
 
@@ -90,25 +77,23 @@ const page = ({ params }: { params: { userId: string } }) => {
 
       <section className={styles.basicInfo}>
         <div>
-          <img src={data?.imageUrl ?? "/assets/images/user-icon.png"} alt="" />
+          <img src={"/assets/images/user-icon.png"} alt="" />
           <article>
             <div className={styles.name}>
-              <h3>Grace</h3>
-              <p>Loremipsumdol</p>
+              <h3>{data?.username.split(' ')[0]}</h3>
+              <p>{data?.username.split(' ')[1]}</p>
             </div>
 
             <div className={styles.usersTier}>
               <p>User's Tier</p>
               <div>
-                <StarFilledIcon />
-                <StarOutlineIcon />
-                <StarOutlineIcon />
+                <UserTierIcons tier={data?.usersTier ?? 0}/>
               </div>
             </div>
 
             <div className={styles.loanDetails}>
-              <h4>₦200,000.00</h4>
-              <p>9912345678/Providus Bank</p>
+              <h4>{data?.loanAmount}</h4>
+              <p>{data?.accountNumber}/{data?.bankName}</p>
             </div>
           </article>
         </div>
@@ -129,8 +114,9 @@ const page = ({ params }: { params: { userId: string } }) => {
       </section>
 
       {view.toLowerCase() === "general details" && (
-        <GeneralDetails extraData={extraData} />
+        <GeneralDetails data={data} />
       )}
+      </> }
     </div>
   );
 };

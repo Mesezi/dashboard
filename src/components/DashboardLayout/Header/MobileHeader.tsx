@@ -10,6 +10,8 @@ import { usePathname } from 'next/navigation';
 import { FaChevronDown } from 'react-icons/fa';
 import { BriefCaseIcon, HomeIcon } from '@/components/Icons';
 import { navItems } from '@/lib/constants';
+import { IoIosLogOut } from 'react-icons/io';
+import { useRouter } from 'next/navigation';
 
 interface NavItemProps {
   path: string;
@@ -36,9 +38,12 @@ const MobileHeader = () => {
   const [isSearchVisible, setIsSearchVisible] = useState(false);
   const [openMenu, setOpenMenu] = useState(false)
   const mobileMenuRef = useRef(null)
+  const searchBarRef = useRef(null)
   const pathname = usePathname();
+ const router = useRouter()
 
   useClickOutside(mobileMenuRef, ()=>setOpenMenu(false))
+  useClickOutside(searchBarRef, ()=>setOpenMenu(false))
 
   const toggleSearch = () => {
     setIsSearchVisible(!isSearchVisible);
@@ -52,11 +57,18 @@ const MobileHeader = () => {
     <header className={styles.mobileHeader}>
      {openMenu && <div className={styles.menuContainer}>
       <aside className={styles.mobileMenu} ref={mobileMenuRef}>
-      <div>
+
+        <div>
+        <Link href={'/dashboard'}>
         <img src="/assets/images/lendsqr-logo.svg" alt="Lendsqr Logo" />
-      </div>
+      </Link>
+
+      <IoIosLogOut size={22} onClick={()=>router.push('/login')}/>
+        </div>
+      
 
       <section>
+        <a href="">Read docs</a>
       <button className={styles.switchOrganization}>
         <BriefCaseIcon />
         Switch Organization
@@ -86,8 +98,6 @@ const MobileHeader = () => {
         </nav>
       </section>
 
-
-        {/* <a href="">Docs <IoDocumentsOutline /></a> */}
     
       
       </aside>
@@ -96,9 +106,8 @@ const MobileHeader = () => {
         <img src="/assets/images/lendsqr-logo.svg" alt="Lendsqr Logo" />
       </div>
 
-
       {isSearchVisible && (
-          <form className={styles.searchForm}>
+          <form className={styles.searchForm} ref={searchBarRef}>
             <input type="text" autoFocus className={styles.input} placeholder='Search for anything' />
             <button type="submit">
               <AiOutlineSearch size={24} />

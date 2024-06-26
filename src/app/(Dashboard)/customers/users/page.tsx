@@ -12,8 +12,8 @@ const index = () => {
       <section className={styles.cardsSlider}>
         <UsersInfoCard cardTitle='Users' amount={2453} icon={TotalUsersCardIcon}/>
         <UsersInfoCard cardTitle='Active users' amount={2453} icon={ActiveUsersCardIcon}/>
-        <UsersInfoCard cardTitle='Users with loans' amount={2453} icon={UsersLoansCardIcon}/>
-        <UsersInfoCard cardTitle='Users with savings' amount={2453} icon={UsersSavingsCardIcon}/>
+        <UsersInfoCard cardTitle='Users with loans' amount={12453} icon={UsersLoansCardIcon}/>
+        <UsersInfoCard cardTitle='Users with savings' amount={102453} icon={UsersSavingsCardIcon}/>
       </section>
 
 

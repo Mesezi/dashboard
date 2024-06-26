@@ -2,16 +2,17 @@
 
 
 .loadingContainer {
-display: grid;
-place-items: center;
-height: 100%;
-height: 60vh;
+  display: grid;
+  place-items: center;
+  height: 100%;
+  height: 60vh;
 
-  > svg{
-      height: 3.5rem;
-      width: 3.5rem;
-      color: $light-blue;
+  >svg {
+    height: 3.5rem;
+    width: 3.5rem;
+    color: $light-blue;
     animation: spin 1s linear infinite;
+
     @keyframes spin {
       100% {
         transform: rotate(360deg);
@@ -21,22 +22,23 @@ height: 60vh;
 }
 
 .errorContainer {
-  display:flex;
+  display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
   gap: .5rem;
   height: 60vh;
-  > svg{
+
+  >svg {
     height: 3.5rem;
     width: 3.5rem;
     color: $red;
-}
-
   }
 
+}
+
 .noFilterResultContainer {
-  display:flex;
+  display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
@@ -45,21 +47,24 @@ height: 60vh;
   left: 0;
   height: 50%;
   width: 100%;
-  p{
+
+  p {
     color: $gray;
   }
-  > svg{
+
+  >svg {
     height: 3.5rem;
     width: 3.5rem;
     color: $light-blue;
-}
-
   }
+
+}
 
 
 .parent {
   position: relative;
 }
+
 .tableContainer {
   background-color: white;
   box-shadow: 5px 5px 20px 0px rgba(0, 0, 0, 0.04);
@@ -92,7 +97,7 @@ height: 60vh;
     text-align: left;
   }
 
-  thead{
+  thead {
     // position: sticky;
     // top: 0;
     background-color: white;
@@ -127,7 +132,7 @@ height: 60vh;
     color: $dark-blue;
     white-space: nowrap;
 
-    .filter-icon{
+    .filter-icon {
       cursor: pointer;
     }
   }
@@ -165,18 +170,21 @@ height: 60vh;
       }
     }
 
-    &:focus {
-
+    &:hover {
       ul {
         display: flex;
       }
-
     }
 
+    &:focus {
+      ul {
+        display: flex;
+      }
+    }
   }
 }
 
-.filterForm{
+.filterForm {
   position: absolute;
   width: 16.88rem;
   background-color: white;
@@ -191,7 +199,8 @@ height: 60vh;
   padding: 1rem;
   margin-top: 3rem;
   margin-left: 1rem;
->section {
+
+  >section {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1rem;
@@ -216,14 +225,14 @@ height: 60vh;
     color: $gray;
   }
 
-  .filterFormSelect{
+  .filterFormSelect {
     position: relative;
     font-size: .88rem;
     display: flex;
     flex-direction: column;
     gap: .5rem;
 
-    & label{
+    & label {
       font-weight: 500;
       font-size: .88rem;
       text-transform: capitalize;
@@ -233,7 +242,7 @@ height: 60vh;
     button[data-value="true"] {
       opacity: 1;
     }
-   
+
     button {
       display: flex;
       justify-content: space-between;
@@ -248,9 +257,11 @@ height: 60vh;
       opacity: 25%;
       text-transform: capitalize;
       font-weight: 400;
-      &:focus{
+
+      &:focus {
         opacity: 100%;
-        & svg{
+
+        & svg {
           transform: rotate(180deg);
         }
       }
@@ -278,14 +289,75 @@ height: 60vh;
     }
   }
 
-  .filterFormTextInput{
+  .filterFormDateInput {
     position: relative;
     font-size: .88rem;
     display: flex;
     flex-direction: column;
     gap: .5rem;
 
-    & label{
+    & label {
+      font-weight: 500;
+      font-size: .88rem;
+      text-transform: capitalize;
+      color: $gray;
+    }
+
+    > div[data-has-value="true"] {
+      opacity: 1;
+    }
+
+    > div{
+      height: 2.5rem;
+     opacity: 25%;
+      width: 100%;
+      background-color: none;
+      border-radius: .25rem;
+      text-transform: capitalize;
+      font-weight: 400;
+      position: relative;
+      color: $dark-blue;
+      border: 1px solid $dark-blue;
+
+      
+
+      p{
+position: absolute;
+height: 100%;
+width: 100%;
+padding: 0 .7rem;
+padding-right: .4rem;
+display: flex;
+justify-content: space-between;
+align-items: center;
+color: $dark-blue;
+      }
+    }
+
+    input {
+    width: 100%;
+    height: 100%;
+      position: relative;
+      z-index: 15;
+      opacity: 0;
+   
+
+      // &:focus {
+      //   opacity: 100%;
+      // }
+    }
+  }
+
+  
+
+  .filterFormTextInput {
+    position: relative;
+    font-size: .88rem;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+
+    & label {
       font-weight: 500;
       font-size: .88rem;
       text-transform: capitalize;
@@ -295,7 +367,7 @@ height: 60vh;
     input[data-has-value="true"] {
       opacity: 1;
     }
-   
+
     input {
       height: 2.5rem;
       padding: 0 .7rem;
@@ -309,16 +381,16 @@ height: 60vh;
       font-weight: 400;
 
       & :not(:placeholder-shown) {
-       opacity: 1;
+        opacity: 1;
       }
 
-      &:focus{
+      &:focus {
         opacity: 100%;
       }
     }
   }
 
- 
+
 }
 
 
@@ -376,7 +448,7 @@ height: 60vh;
       position: relative;
       font-size: .88rem;
       color: $dark-blue;
-     
+
       button {
         display: flex;
         justify-content: space-between;
@@ -388,12 +460,12 @@ height: 60vh;
         border-radius: .25rem;
         color: $dark-blue;
 
-        &:focus{
-          & svg{
-          transform: rotate(180deg);
+        &:focus {
+          & svg {
+            transform: rotate(180deg);
+          }
         }
-        }
-        
+
       }
 
       ul {
@@ -422,7 +494,7 @@ height: 60vh;
 
 }
 
-.numbering :global{
+.numbering :global {
   display: flex;
   gap: 1rem;
   align-items: center;
@@ -439,19 +511,19 @@ height: 60vh;
   }
 
 
-  .number-pill{
+  .number-pill {
     color: $gray;
     font-weight: 400;
   }
 
 
-  :disabled{
-      opacity: 1;
-      font-weight: 500;
-      color: $dark-blue;
+  :disabled {
+    opacity: 1;
+    font-weight: 500;
+    color: $dark-blue;
   }
 
-  .btn{
+  .btn {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -460,9 +532,9 @@ height: 60vh;
     background-color: rgba($gray, .1);
     border-radius: 0.25rem;
     color: $dark-blue;
-   
-    
-    &:disabled{
+
+
+    &:disabled {
       opacity: 60%;
     }
   }

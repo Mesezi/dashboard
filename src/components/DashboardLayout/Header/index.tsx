@@ -2,14 +2,15 @@ import React from "react";
 import { BellIcon, DropdownIcon, SearchIcon } from "@/components/Icons";
 import styles from "./Header.module.scss";
 import { AiOutlineBell } from "react-icons/ai";
+import Link from "next/link";
 interface IHeader {}
 
 const index = () => {
   return (
     <header className={styles.header}>
-      <div className={styles.logo}>
-        <img src="/assets/images/lendsqr-logo.svg" alt="" />
-      </div>
+      <Link href={'/dashboard'}  className={styles.logo}>
+        <img src="/assets/images/lendsqr-logo.svg" alt="Lendsqr Logo" />
+      </Link>
 
       <div className={styles.info}>
         <form action="">

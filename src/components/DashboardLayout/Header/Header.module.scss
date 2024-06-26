@@ -173,9 +173,18 @@
                 overflow-y: auto;
     
                 section {
-                    margin: 1rem 0;
+                    margin-bottom: 1rem;
                     text-align: left;
                     width: 100%;
+
+                    a{
+                        color: $dark-blue;
+                        padding-left: 1rem;
+                        font-weight: 400;
+                        font-size: .88rem;
+                        display: inline-block;
+                        margin-bottom: 1rem;
+                    }
     
                     h4 {
                         font-weight: 500;
@@ -237,11 +246,16 @@
     
     
     
-                >div {
+                > div {
                     display: flex;
-                    height: 6.25rem;
+                    height: 6rem;
                     align-items: center;
+                    justify-content: space-between;
                     padding: 0 1rem;
+
+                    svg{
+                        color: $red;
+                    }
     
                     img {
                         width: 100px;

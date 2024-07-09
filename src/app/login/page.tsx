@@ -46,7 +46,7 @@ const page = () => {
           validationSchema={loginFormSchema}
           onSubmit={(values, { setSubmitting }) => {
             setTimeout(() => {
-              router.push("dashboard");
+              router.push("/customers/users");
               toast.success("Successfully logged in");
             }, 2000);
           }}

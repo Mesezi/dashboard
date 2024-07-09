@@ -377,8 +377,11 @@ color: $dark-blue;
       color: $dark-blue;
       border: 1px solid $dark-blue;
       opacity: 25%;
-      text-transform: capitalize;
       font-weight: 400;
+
+      &::placeholder{
+        text-transform: capitalize;
+      }
 
       & :not(:placeholder-shown) {
         opacity: 1;

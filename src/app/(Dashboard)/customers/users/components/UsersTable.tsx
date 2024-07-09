@@ -245,9 +245,12 @@ const UsersTable = () => {
     }),
   ];
 
+  console.log(data)
+
   return (
     <div>
-      <DataTable
+      
+     {data && <DataTable
         columns={columns}
         data={data}
         filtering={filtering}
@@ -260,7 +263,7 @@ const UsersTable = () => {
         currentPage={currentPage}
         isLoading={isLoading}
         isError={isError}
-      />
+      /> }
     </div>
   );
 };

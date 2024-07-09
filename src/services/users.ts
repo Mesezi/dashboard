@@ -3,10 +3,13 @@ import { User } from "@/types";
 export const getUsersTableData = async () => {
   try {
     const res = await fetch(
-      "https://run.mocky.io/v3/3730fbe5-0140-42c5-8d38-9c191ce3064b"
+      "https://run.mocky.io/v3/d8207f51-35a0-4b18-9ca7-f970a81f959e"
     );
     const data = await res.json();
-    return data;
+    if(data){
+      return data;
+    }
+    return []
   } catch (err) {
     throw new Error('Error fetching data') 
   }

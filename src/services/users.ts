@@ -6,10 +6,7 @@ export const getUsersTableData = async () => {
       "https://run.mocky.io/v3/d8207f51-35a0-4b18-9ca7-f970a81f959e"
     );
     const data = await res.json();
-    if(data){
-      return data;
-    }
-    return []
+    return data;
   } catch (err) {
     throw new Error('Error fetching data') 
   }

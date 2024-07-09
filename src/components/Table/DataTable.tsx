@@ -165,7 +165,9 @@ export function DataTable({
     debugColumns: false,
   });
 
-  console.log(isLoading, isError)
+  if(!tableInstance){
+    return <p>No data found</p>
+  }
 
   return (
     <>
@@ -209,6 +211,13 @@ export function DataTable({
   isLoading && <div className={styles.loadingContainer}>
 <AiOutlineLoading3Quarters />
     </div>
+}
+
+{
+  !isLoading && !data && <div className={styles.errorContainer}>
+  <MdOutlineWifiTetheringError />
+  <p>No data found</p>
+      </div>
 }
 
 {
@@ -274,8 +283,8 @@ export function DataTable({
       { !isLoading && data?.length !== 0 && <CustomPagination
         totalRecords={tableInstance?.getFilteredRowModel()?.rows?.length}
         setPageSize={setPageSize}
-        totalPages={tableInstance?.getPageCount()}
-        pageCount={tableInstance?.getPageCount()}
+        totalPages={tableInstance?.getPageCount() || 0}
+        pageCount={tableInstance?.getPageCount() || 0}
         pageSize={pageSize}
         handlePageChange={setCurrentPage}
         currentPage={currentPage}

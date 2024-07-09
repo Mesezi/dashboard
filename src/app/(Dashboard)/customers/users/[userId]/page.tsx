@@ -53,8 +53,6 @@ const page = ({ params }: { params: { userId: string } }) => {
     return <div>{icons}</div>;
   };
 
-  console.log(data)
-
   return (
     <div>
       <button className={styles.backBtn} onClick={() => router.back()}>

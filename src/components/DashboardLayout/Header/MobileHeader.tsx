@@ -60,7 +60,7 @@ const MobileHeader = () => {
 
         <div>
         <Link href={'/dashboard'}>
-        <img src="/assets/images/lendsqr-logo.svg" alt="Lendsqr Logo" />
+        <img src="/assets/images/logo.png" alt="logo" />
       </Link>
 
       <IoIosLogOut size={22} onClick={()=>router.push('/login')}/>
@@ -103,7 +103,7 @@ const MobileHeader = () => {
       </aside>
       </div> }
       <div className={styles.logo}>
-        <img src="/assets/images/lendsqr-logo.svg" alt="Lendsqr Logo" />
+        <img src="/assets/images/logo.jpg" alt="logo" />
       </div>
 
       {isSearchVisible && (

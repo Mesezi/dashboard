@@ -1,7 +1,5 @@
-### Lendsqr Frontend Test Project: Building a Login Screen, User Dashboard, User Detail screen
-
 #### Overview
-This repository documents the development of a React application using **Next.js**. The project focuses on creating a login screen, user dashboard, and user detail pages for the Lendsqr Frontend Test. Key frontend technologies include **SCSS** for styling, **TanStack Query** for data fetching, **TanStack Table** for user data display, **Formik** for form management, and **Yup** for form validation.
+This repository documents the development of a React application using **Next.js**. The project focuses on creating a login screen, user dashboard, and user detail pages. Key frontend technologies include **SCSS** for styling, **TanStack Query** for data fetching, **TanStack Table** for user data display, **Formik** for form management, and **Yup** for form validation.
 
 #### Technologies Used
 - **React (Next.js)**: Simplified routing and structured frontend development.

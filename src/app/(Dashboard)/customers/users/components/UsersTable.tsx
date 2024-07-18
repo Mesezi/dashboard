@@ -41,7 +41,7 @@ const UsersTable = () => {
     try {
       const response = await getUsersTableData();
       // Store response in sessionStorage
-      sessionStorage.setItem("lendsqrMockData", JSON.stringify(response));
+      sessionStorage.setItem("dashboardMockData", JSON.stringify(response));
       return response;
     } catch (err) {
       toast.error("Error getting data");

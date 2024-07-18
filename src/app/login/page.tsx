@@ -26,7 +26,7 @@ const page = () => {
     <main className={styles.root}>
       <section>
         <img
-          src="/assets/images/lendsqr-logo.svg"
+          src="/assets/images/logo.jpg"
           alt="logo"
           className="logo"
         />

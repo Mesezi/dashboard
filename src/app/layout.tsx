@@ -10,7 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 
 export const metadata: Metadata = {
-  title: "Lendsqr Frontend Test",
+  title: "Dashboard",
   description: "",
 };
 

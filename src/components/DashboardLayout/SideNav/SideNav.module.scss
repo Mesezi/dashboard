@@ -87,7 +87,7 @@
   
   .active {
     color: $dark-blue; // Active state color
-    background-color: rgb(57, 205, 204, .1); // Active state background color
+    background-color: rgba($light-blue, 20%); // Active state background color
     opacity: 1;
     border-left: 3px solid $light-blue;
   }

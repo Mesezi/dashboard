@@ -9,7 +9,7 @@ const index = () => {
   return (
     <header className={styles.header}>
       <Link href={'/dashboard'}  className={styles.logo}>
-        <img src="/assets/images/lendsqr-logo.svg" alt="Lendsqr Logo" />
+        <img src="/assets/images/logo.jpg" alt="logo" />
       </Link>
 
       <div className={styles.info}>
